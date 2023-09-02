@@ -28,12 +28,8 @@ jobs:
       run: dotnet build --no-restore
     # - name: Test
     #   run: dotnet test --no-build --verbosity normal
-    - name: configure aws credentials
-      uses: aws-actions/configure-aws-credentials@v1.7.0
-      with:
-          role-to-assume: arn:aws:iam::719727752067:role/GitHubAction-AssumeRoleWithAction
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: us-east-1
-    - name: Sts GetCallerIdentity
-      run: |
-          aws sts get-caller-identity
+    
+    - name: AWS CLI
+      run: dotnet tool install -g Amazon.Lambda.Tools
+    - name: Deploy to Lambda
+      run: dotnet lambda deploy-serverless
