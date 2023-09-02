@@ -39,11 +39,9 @@ jobs:
           role-to-assume: arn:aws:iam::719727752067:role/GitHubAction-AssumeRoleWithAction
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-2
-    - name: ls
-      run: ls -la
     - name: deploy
       # run: aws lambda update-function-code --function-name arn:aws:lambda:us-east-2:719727752067:function:VideoReader --zip-file fileb://bundle.zip
-      run: cd src/VideoReader; dotnet lambda deploy-function VideoReader
+      run: cd src/VideoReader; ls -la; dotnet lambda deploy-function VideoReader
     # - name: default deploy
     #   uses: appleboy/lambda-action@master
     #   with:
