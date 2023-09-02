@@ -37,7 +37,7 @@ jobs:
       with:
           role-to-assume: arn:aws:iam::719727752067:role/GitHubAction-AssumeRoleWithAction
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: us-east-1
+          aws-region: us-east-2
     - name: default deploy
       uses: appleboy/lambda-action@master
       with:
