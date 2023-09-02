@@ -30,11 +30,9 @@ jobs:
       uses: montudor/action-zip@v0.1.0
       with:
           args: zip -qq -r ./bundle.zip ./
-    - name: deploy
-      uses: appleboy/lambda-action@master
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v1.7.0
       with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: eu-west-1
-          function_name: VideoReader
-          zip_file: bundle.zip
+          role-to-assume: arn:aws:iam::719727752067:role/GitHubAction-AssumeRoleWithAction
+          role-session-name: GitHub_To_AWS_Via_OIDC
+          aws-region: us-east-1
