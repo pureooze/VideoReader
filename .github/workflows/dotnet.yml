@@ -41,7 +41,7 @@ jobs:
     - name: ls
       run: ls -la
     - name: deploy
-      run: aws update-function-code --function-name arn:aws:lambda:us-east-2:719727752067:function:VideoReader --zip-file bundle.zip --dry-run
+      run: aws lambda update-function-code --function-name arn:aws:lambda:us-east-2:719727752067:function:VideoReader --zip-file bundle.zip --dry-run
     # - name: default deploy
     #   uses: appleboy/lambda-action@master
     #   with:
