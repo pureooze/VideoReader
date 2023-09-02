@@ -43,7 +43,7 @@ jobs:
       run: ls -la
     - name: deploy
       # run: aws lambda update-function-code --function-name arn:aws:lambda:us-east-2:719727752067:function:VideoReader --zip-file fileb://bundle.zip
-      run: dotnet lambda deploy-function VideoReader --function-role arn:aws:iam::719727752067:role/GitHubAction-AssumeRoleWithAction
+      run: dotnet lambda deploy-function VideoReader
     # - name: default deploy
     #   uses: appleboy/lambda-action@master
     #   with:
