@@ -32,6 +32,7 @@ jobs:
       uses: montudor/action-zip@v0.1.0
       with:
           args: zip -qq -r ./bundle.zip src/VideoReader/bin/Debug/net6.0
+          working-directory: src/VideoReader/bin/Debug/net6.0
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1.7.0
       with:
