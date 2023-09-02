@@ -26,13 +26,9 @@ jobs:
       run: dotnet build --no-restore
     # - name: Test
     #   run: dotnet test --no-build --verbosity normal
-    - name: zip
-      uses: montudor/action-zip@v0.1.0
-      with:
-          args: zip -qq -r ./bundle.zip ./
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1.7.0
       with:
           role-to-assume: arn:aws:iam::719727752067:role/GitHubAction-AssumeRoleWithAction
-          role-session-name: GitHub_To_AWS_Via_OIDC
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-1
