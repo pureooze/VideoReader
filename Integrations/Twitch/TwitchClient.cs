@@ -1,27 +1,30 @@
+using Integration.Twitch.Domain;
+using Integrations;
 using Integrations.Domain;
 
-namespace Integrations.Twitch; 
+namespace Integration.Twitch; 
 
 public class TwitchClient : IDomainClient {
     public async Task<IEnumerable<Manifests>> GetManifests(
         VideoId videoId
     ) {
 
-        for( int retriesRemaining = 5; retriesRemaining > 0 ; retriesRemaining--) {
-            IEnumerable<Manifests> streamInfo = await GetStreamInfoAsync(videoId);
-        }
-        
-        return new List<Manifests>() {
-            new(
-                new StreamInfo( "hello" )
-            )
-        };
+        IEnumerable<Manifests> streamInfo = await GetStreamInfoAsync(videoId);
+        return streamInfo;
     }
 
     private async Task<IEnumerable<Manifests>> GetStreamInfoAsync(
         VideoId videoId
     ) {
-        IDomainController controller = new TwitchController();
-        throw new NotImplementedException();
+        ITwitchController controller = new TwitchController();
+        TwitchVideoIdResponse? content = await controller.GetVideoId( videoId );
+        
+        return new List<Manifests>() {
+            new (
+                new StreamInfo(
+                    content?.Data.Video.Title
+                )
+            )
+        };
     }
 }

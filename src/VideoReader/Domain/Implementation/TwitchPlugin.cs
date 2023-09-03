@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Integration.Twitch;
 using Integrations;
 using Integrations.Domain;
-using Integrations.Twitch;
 using YoutubeExplode.Videos.Streams;
 
 namespace VideoReader.Domain.Implementation; 
@@ -25,8 +25,9 @@ internal class TwitchPlugin : IVideoPlugin {
     ) {
         IDomainClient domainClient = new TwitchClient();
 
+        int index = sourceUri.LastIndexOf('/');
         IEnumerable<Manifests> manifests = await domainClient.GetManifests(
-            new VideoId( "hello" )
+            new VideoId( sourceUri[(index+1)..] )
         );
 
         return manifests.Select(

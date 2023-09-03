@@ -1,5 +1,5 @@
-namespace Integrations.Domain; 
+namespace Integrations.Domain;
 
-internal sealed record StreamInfo(
-    string Url
+public sealed record StreamInfo(
+    string? Url
 );

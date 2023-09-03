@@ -43,7 +43,7 @@ namespace VideoReader
             }
             
             return new APIGatewayProxyResponse {
-                Body = JsonSerializer.Serialize( "" ),
+                Body = JsonSerializer.Serialize( "Failed To Get Video" ),
                 StatusCode = 500,
                 Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
             };
