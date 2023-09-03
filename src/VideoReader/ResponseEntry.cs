@@ -1,7 +1,10 @@
-using YoutubeExplode.Common;
-using YoutubeExplode.Videos.Streams;
+namespace VideoReader;
 
-namespace VideoReader.Domain.Implementation; 
+public sealed record VideoQuality(
+    string Label,
+    int Framerate,
+    bool IsHighDefinition
+);
 
 public sealed record ResponseEntry ( 
     string Url,

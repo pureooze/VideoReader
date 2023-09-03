@@ -8,7 +8,8 @@ internal class VideoPluginProvider : IVideoPluginProvider
     {
         return new List<IVideoPlugin>()
         {
-            new YoutubePlugin()
+            new YoutubePlugin(),
+            new TwitchPlugin()
         };
     }
 }
