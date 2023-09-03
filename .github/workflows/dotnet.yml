@@ -33,6 +33,8 @@ jobs:
       with:
           args: zip -qq -r ./bundle.zip ./
           working-directory: src/VideoReader/bin/Debug/net6.0/
+    - name: Install Amazon.Lambda.Tools
+      run: dotnet tool install -g Amazon.Lambda.Tools
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1.7.0
       with:
