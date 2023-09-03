@@ -43,7 +43,7 @@ jobs:
           aws-region: us-east-2
     - name: deploy
       # run: aws lambda update-function-code --function-name arn:aws:lambda:us-east-2:719727752067:function:VideoReader --zip-file fileb://bundle.zip
-      run: cd src/VideoReader; ls -la; dotnet lambda deploy-function VideoReader
+      run: cd src/VideoReader; ls -la; dotnet lambda deploy-function VideoReader -c Release --function-runtime dotnet6 --region us-east-2
     # - name: default deploy
     #   uses: appleboy/lambda-action@master
     #   with:
