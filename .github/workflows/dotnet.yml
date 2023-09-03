@@ -28,25 +28,14 @@ jobs:
       run: dotnet build --no-restore --configuration Release
     # - name: Test
     #   run: dotnet test --no-build --verbosity normal
-    - name: zip
-      uses: montudor/action-zip@v0.1.0
-      with:
-          args: zip -qq -r ./bundle.zip ./
-          working-directory: src/VideoReader/bin/Debug/net6.0/
     - name: Install Amazon.Lambda.Tools
       run: dotnet tool install -g Amazon.Lambda.Tools
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v1.7.0
       with:
-          role-to-assume: arn:aws:iam::719727752067:role/GitHubAction-AssumeRoleWithAction
+          role-to-assume: ${{ AWS_ROLE_TO_UPLOAD_LAMBDA }}
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-2
     - name: deploy
-      # run: aws lambda update-function-code --function-name arn:aws:lambda:us-east-2:719727752067:function:VideoReader --zip-file fileb://bundle.zip
       run: cd src/VideoReader; ls -la; dotnet lambda deploy-function VideoReader -c Release --function-runtime dotnet6 --region us-east-2
-    # - name: default deploy
-    #   uses: appleboy/lambda-action@master
-    #   with:
-    #       function_name: VideoReader
-    #       zip_file: bundle.zip
           
