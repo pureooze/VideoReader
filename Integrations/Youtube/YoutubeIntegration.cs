@@ -47,6 +47,9 @@ public class YoutubeIntegration : IIntegration {
         
         return manifest
             .GetMuxedStreams()
-            .Where( stream => stream.Container == Container.Mp4 );
+            .Where( stream => 
+                stream.Container == Container.Mp4 ||
+                stream.Container == Container.WebM
+            );
     }
 }
