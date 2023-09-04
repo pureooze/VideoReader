@@ -10,5 +10,6 @@ public sealed record ResponseEntry (
     string Url,
     string Codec,
     VideoQuality VideoQuality,
-    double SizeInMb
+    double SizeInMb,
+    string ThumbnailUrl
 );

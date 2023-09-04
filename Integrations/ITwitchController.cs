@@ -1,15 +1,20 @@
 using Integration.Twitch.Domain;
-using Integrations.Domain;
 
 namespace Integration; 
 
 public interface ITwitchController {
     Task<TwitchVideoIdResponse?> GetVideoId(
-        VideoId url
+        string url
     );
 
-    Task<TwitchVideoIdResponse?> GetVideoToken(
-        VideoId url,
+    Task<TwitchVideoTokenResponse?> GetVideoToken(
+        string videoId,
         string authToken
+    );
+
+    Task<string> GetVideoSource(
+        string videoId,
+        string token,
+        string signature
     );
 }

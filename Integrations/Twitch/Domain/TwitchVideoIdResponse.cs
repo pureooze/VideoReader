@@ -1,11 +1,11 @@
 namespace Integration.Twitch.Domain; 
 
 public record TwitchVideoIdResponse(
-    Data Data,
-    Extensions Extensions
+    TwitchVideoIdResponseData? Data,
+    TwitchVideoIdResponseExtensions? Extensions
 );
 
-public record Data(
+public record TwitchVideoIdResponseData(
     Video Video
 );
 
@@ -19,7 +19,7 @@ public record Video(
     Game Game
 );
 
-public record Extensions(
+public record TwitchVideoIdResponseExtensions(
     long DurationMilliseconds,
     string RequestId
 );

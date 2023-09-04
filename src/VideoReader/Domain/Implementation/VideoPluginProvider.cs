@@ -5,12 +5,12 @@ namespace VideoReader.Domain.Implementation;
 
 internal class VideoPluginProvider : IVideoPluginProvider
 {
-    IEnumerable<IVideoPlugin> IVideoPluginProvider.GetPlugins()
-    {
-        return new List<IVideoPlugin>()
-        {
-            new YoutubePlugin(),
-            new TwitchPlugin()
-        };
+    private readonly IEnumerable<IVideoPlugin> m_plugins = new List<IVideoPlugin>() {
+        new YoutubePlugin(),
+        new TwitchPlugin()
+    };
+
+    IEnumerable<IVideoPlugin> IVideoPluginProvider.GetPlugins() {
+        return m_plugins;
     }
 }

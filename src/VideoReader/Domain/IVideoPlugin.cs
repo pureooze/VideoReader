@@ -10,7 +10,4 @@ public interface IVideoPlugin
     Task<IEnumerable<ResponseEntry>> GetManifests(
         string sourceUri
     );
-    Task<Stream> GetVideoSource(
-        string uri
-    );
 }
