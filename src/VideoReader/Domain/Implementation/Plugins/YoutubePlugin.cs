@@ -23,6 +23,10 @@ internal class YoutubePlugin : IVideoPlugin {
         ).Success;
     }
 
+    PluginOutputType IVideoPlugin.GetPluginType() {
+        return PluginOutputType.File;
+    }
+
     async Task<IEnumerable<ResponseEntry>> IVideoPlugin.GetManifests(
         string sourceUri
     ) {

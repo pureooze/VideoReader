@@ -20,6 +20,10 @@ internal class TwitchPlugin : IVideoPlugin {
         ).Success;
     }
 
+    PluginOutputType IVideoPlugin.GetPluginType() {
+        return PluginOutputType.Playlist;
+    }
+
     async Task<IEnumerable<ResponseEntry>> IVideoPlugin.GetManifests(
         string sourceUri
     ) {

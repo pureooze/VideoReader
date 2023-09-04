@@ -6,7 +6,7 @@ namespace VideoReader.Domain.Implementation;
 
 internal class Service : IService {
     
-    async Task<IEnumerable<ResponseEntry>> IService.GetVideoSourcesForUriAsync(
+    async Task<ServiceResult<ResponseEntry>> IService.GetVideoSourcesForUriAsync(
         string uri
     ) {
         IVideoPluginProvider videoPluginProvider = new VideoPluginProvider();
@@ -18,7 +18,10 @@ internal class Service : IService {
                 IEnumerable<ResponseEntry> result =
                     await plugin.GetManifests( sourceUri: uri );
 
-                return result;
+                return new ServiceResult<ResponseEntry>(
+                    OutputType: plugin.GetPluginType(),
+                    Result: result
+                );
             }
         }
 
