@@ -28,7 +28,7 @@ namespace VideoReader
             }
 
             IService service = new Service();
-            IEnumerable<ResponseEntry> results = await service.GetVideoSourcesForUriAsync( uri: uri );
+            ServiceResult<ResponseEntry> results = await service.GetVideoSourcesForUriAsync( uri: uri );
             
             return new APIGatewayProxyResponse {
                 Body = JsonSerializer.Serialize( results ),
