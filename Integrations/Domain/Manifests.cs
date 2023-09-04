@@ -1,6 +1,4 @@
-using Integration.Domain;
-
-namespace Integrations.Domain; 
+namespace Integration.Domain; 
 
 public record Manifests(
     StreamInfo Stream

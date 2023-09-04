@@ -1,6 +1,5 @@
 using Integration.Domain;
 using Integrations;
-using Integrations.Domain;
 using YoutubeExplode;
 using YoutubeExplode.Videos;
 using YoutubeExplode.Videos.Streams;

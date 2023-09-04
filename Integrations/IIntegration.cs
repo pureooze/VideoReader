@@ -1,4 +1,4 @@
-using Integrations.Domain;
+using Integration.Domain;
 
 namespace Integrations; 
 

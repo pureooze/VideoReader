@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Integration.Domain;
 using Integration.Twitch;
 using Integrations;
-using Integrations.Domain;
 
 namespace VideoReader.Domain.Implementation.Plugins; 
 

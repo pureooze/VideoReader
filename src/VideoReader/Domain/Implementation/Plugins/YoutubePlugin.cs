@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Integration.Domain;
 using Integration.Youtube;
 using Integrations;
-using Integrations.Domain;
 using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 

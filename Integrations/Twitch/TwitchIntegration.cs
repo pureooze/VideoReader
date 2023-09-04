@@ -1,7 +1,6 @@
 using Integration.Domain;
 using Integration.Twitch.Domain;
 using Integrations;
-using Integrations.Domain;
 
 namespace Integration.Twitch; 
 
@@ -19,17 +18,21 @@ public class TwitchIntegration : IIntegration {
     ) {
         ITwitchController controller = new TwitchController();
         TwitchVideoIdResponse? content = await controller.GetVideoId( videoId );
+        TwitchVideoTokenResponse? tokenResponse = await controller.GetVideoToken( videoId, "kimne78kx3ncx6brgo4mv6wki5h1ko" );
+        string videoSourceResponse = await controller.GetVideoSource(
+            videoId: videoId,
+            token: tokenResponse?.Data.VideoPlaybackAccessToken.Value ?? "",
+            signature: tokenResponse?.Data.VideoPlaybackAccessToken.Signature ?? ""
+        );
         
-        Console.WriteLine("Content: ");
-        Console.WriteLine(content);
         return new List<Manifests>() {
             new (
                 new StreamInfo(
-                    Url: content?.Data.Video.Title,
+                    Url: videoSourceResponse,
                     ThumbnailUrl: "",
                     LengthInSeconds: TimeSpan.Zero,
                     Codec: "",
-                    Label: "",
+                    Label: content?.Data?.Video.Title ?? "",
                     Framerate: 30,
                     IsHighDefinition: true,
                     SizeInMb: 100
