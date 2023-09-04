@@ -37,7 +37,10 @@ namespace VideoReader
                     return new APIGatewayProxyResponse {
                         Body = JsonSerializer.Serialize( results ),
                         StatusCode = 200,
-                        Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                        Headers = new Dictionary<string, string> {
+                            { "Content-Type", "application/json" }, 
+                            { "Access-Control-Allow-Origin", "*" }
+                        }
                     };
                 }
             }
