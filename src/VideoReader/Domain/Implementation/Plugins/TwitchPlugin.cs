@@ -34,7 +34,11 @@ internal class TwitchPlugin : IVideoPlugin {
             manifest => new ResponseEntry(
                 Url: manifest.Stream.Url,
                 Codec: "",
-                VideoQuality: null,
+                VideoQuality: new VideoQuality(
+                    Label: manifest.Stream.Label,
+                    Framerate: manifest.Stream.Framerate,
+                    IsHighDefinition: manifest.Stream.IsHighDefinition
+                ),
                 SizeInMb: 100,
                 ThumbnailUrl: manifest.Stream.ThumbnailUrl
             )
