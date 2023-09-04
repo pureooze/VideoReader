@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
 using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.APIGatewayEvents;
-using VideoReader.Domain;
 using VideoReader.Domain.Implementation;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.

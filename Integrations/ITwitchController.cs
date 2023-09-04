@@ -5,11 +5,11 @@ namespace Integration;
 
 public interface ITwitchController {
     Task<TwitchVideoIdResponse?> GetVideoId(
-        VideoId url
+        string url
     );
 
     Task<TwitchVideoIdResponse?> GetVideoToken(
-        VideoId url,
+        string url,
         string authToken
     );
 }

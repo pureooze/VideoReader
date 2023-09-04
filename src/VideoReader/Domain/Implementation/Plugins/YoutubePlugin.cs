@@ -3,14 +3,16 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Integration.Youtube;
+using Integrations;
+using Integrations.Domain;
 using YoutubeExplode;
 using YoutubeExplode.Videos.Streams;
 
 namespace VideoReader.Domain.Implementation.Plugins;
 
-internal class YoutubePlugin : IVideoPlugin
-{
-    private readonly YoutubeClient m_client = new ();
+internal class YoutubePlugin : IVideoPlugin {
+    private readonly IIntegration m_integration = new YoutubeIntegration();
 
     bool IVideoPlugin.CanHandleUri( string sourceUri )
     {
@@ -24,56 +26,21 @@ internal class YoutubePlugin : IVideoPlugin
     async Task<IEnumerable<ResponseEntry>> IVideoPlugin.GetManifests(
         string sourceUri
     ) {
-        IEnumerable<IVideoStreamInfo> streamInfoList = await GetVideoStreamInfoManifests( source: sourceUri);
+        IEnumerable<Manifests> manifests = await m_integration.GetManifests( sourceUri );
 
-        return streamInfoList.Select( 
-            streamInfo => 
+        return manifests.Select( 
+            manifest => 
                 new ResponseEntry( 
-                    Url: streamInfo.Url,
-                    Codec: streamInfo.VideoCodec,
+                    Url: manifest.Stream.Url,
+                    Codec: manifest.Stream.Codec,
                     VideoQuality: new VideoQuality( 
-                        Label: streamInfo.VideoQuality.Label, 
-                        Framerate: streamInfo.VideoQuality.Framerate, 
-                        IsHighDefinition: streamInfo.VideoQuality.IsHighDefinition 
+                        Label: manifest.Stream.Label, 
+                        Framerate: manifest.Stream.Framerate, 
+                        IsHighDefinition: manifest.Stream.IsHighDefinition 
                     ),
-                    SizeInMb: streamInfo.Size.MegaBytes
+                    SizeInMb: manifest.Stream.SizeInMb,
+                    ThumbnailUrl: null
                 ) 
         );
-    }
-
-    async Task<Stream> IVideoPlugin.GetVideoSource(
-        string uri
-    ) {
-        IVideoPlugin videoPlugin = this;
-        IEnumerable<IVideoStreamInfo> streamInfo = await GetVideoStreamInfoManifests( source: uri );
-        
-        Stream stream = await m_client.Videos.Streams.GetAsync( streamInfo.First() );
-        
-        return stream;
-
-        // return streamInfoList.Select( 
-        //     streamInfo => 
-        //         new ResponseEntry( 
-        //             Url: streamInfo.Url,
-        //             Codec: streamInfo.VideoCodec,
-        //             VideoQuality: new VideoQuality( 
-        //                 Label: streamInfo.VideoQuality.Label, 
-        //                 Framerate: streamInfo.VideoQuality.Framerate, 
-        //                 IsHighDefinition: streamInfo.VideoQuality.IsHighDefinition 
-        //             ),
-        //             SizeInMb: streamInfo.Size.MegaBytes
-        //         ) 
-        // );
-    }
-
-    private async Task<IEnumerable<IVideoStreamInfo>> GetVideoStreamInfoManifests(
-        string source
-    ) {
-        StreamManifest manifest = 
-            await m_client.Videos.Streams.GetManifestAsync( source );
-        
-        return manifest
-            .GetMuxedStreams()
-            .Where( stream => stream.Container == Container.Mp4 );
     }
 }

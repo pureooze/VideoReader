@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Text;
 using Integration.Twitch.Domain;
 using Integrations.Domain;
 
@@ -9,7 +10,7 @@ internal class TwitchController : ITwitchController {
     private readonly HttpClient m_httpClient = new(){ Timeout = TimeSpan.FromSeconds(30) };
 
     public async Task<TwitchVideoIdResponse?> GetVideoId(
-        VideoId videoId
+        string videoId
     ) {
         
         using HttpRequestMessage request = new (
@@ -18,22 +19,24 @@ internal class TwitchController : ITwitchController {
         );
         request.Content = new StringContent(
             // lang=json
-            content: $$$$"""{"query": "query{video(id:"{{{{videoId.Url}}}}"){title,thumbnailURLs(height:180,width:320),createdAt,lengthSeconds,owner{id,displayName},viewCount,game{id,displayName}}}","variables":{}}"""
+            content: "{\"query\":\"query{video(id:\\\"" + videoId + "\\\"){title,thumbnailURLs(height:180,width:320),createdAt,lengthSeconds,owner{id,displayName},viewCount,game{id,displayName}}}\",\"variables\":{}}",
+            encoding: Encoding.UTF8, 
+            mediaType: "application/json"
         );
 
         request.Headers.Add( 
-            name: "Client-ID", value: ""   
+            "Client-ID", "kimne78kx3ncx6brgo4mv6wki5h1ko"   
         );
 
         
-        using HttpResponseMessage response = await m_httpClient.SendAsync(request);
+        using HttpResponseMessage response = await m_httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
         response.EnsureSuccessStatusCode();
 
         return await response.Content.ReadFromJsonAsync<TwitchVideoIdResponse>();
     }
 
     public async Task<TwitchVideoIdResponse?> GetVideoToken(
-        VideoId url,
+        string url,
         string authToken
     ) {
         HttpRequestMessage request = new(
@@ -48,8 +51,6 @@ internal class TwitchController : ITwitchController {
         
         using HttpResponseMessage response = await m_httpClient.SendAsync(request);
         response.EnsureSuccessStatusCode();
-        
-        Console.WriteLine(response.Content);
 
         return await response.Content.ReadFromJsonAsync<TwitchVideoIdResponse>();
     }

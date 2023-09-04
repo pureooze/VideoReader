@@ -23,11 +23,11 @@ internal class TwitchPlugin : IVideoPlugin {
     async Task<IEnumerable<ResponseEntry>> IVideoPlugin.GetManifests(
         string sourceUri
     ) {
-        IDomainClient domainClient = new TwitchClient();
+        IIntegration integration = new TwitchIntegration();
 
         int index = sourceUri.LastIndexOf('/');
-        IEnumerable<Manifests> manifests = await domainClient.GetManifests(
-            new VideoId( sourceUri[(index+1)..] )
+        IEnumerable<Manifests> manifests = await integration.GetManifests(
+            sourceUri[(index+1)..]
         );
 
         return manifests.Select(
@@ -35,14 +35,9 @@ internal class TwitchPlugin : IVideoPlugin {
                 Url: manifest.Stream.Url,
                 Codec: "",
                 VideoQuality: null,
-                SizeInMb: 100
+                SizeInMb: 100,
+                ThumbnailUrl: manifest.Stream.ThumbnailUrl
             )
         );
-    }
-
-    public Task<Stream> GetVideoSource(
-        string uri
-    ) {
-        throw new System.NotImplementedException();
     }
 }

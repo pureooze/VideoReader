@@ -2,8 +2,8 @@ using Integrations.Domain;
 
 namespace Integrations; 
 
-public interface IDomainClient {
+public interface IIntegration {
     Task<IEnumerable<Manifests>> GetManifests(
-        VideoId videoId
+        string videoId
     );
 }
