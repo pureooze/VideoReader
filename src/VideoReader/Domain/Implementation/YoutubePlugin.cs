@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.Formats.Asn1;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using YoutubeExplode;
-using YoutubeExplode.Common;
 using YoutubeExplode.Videos.Streams;
 
 namespace VideoReader.Domain.Implementation;
@@ -35,7 +32,11 @@ internal class YoutubePlugin : IVideoPlugin
                 new ResponseEntry( 
                     Url: streamInfo.Url,
                     Codec: streamInfo.VideoCodec,
-                    VideoQuality: streamInfo.VideoQuality,
+                    VideoQuality: new VideoQuality( 
+                        Label: streamInfo.VideoQuality.Label, 
+                        Framerate: streamInfo.VideoQuality.Framerate, 
+                        IsHighDefinition: streamInfo.VideoQuality.IsHighDefinition 
+                    ),
                     SizeInMb: streamInfo.Size.MegaBytes
                 ) 
         );

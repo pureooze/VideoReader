@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
 using Amazon.Lambda.Annotations;
@@ -8,7 +6,6 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.APIGatewayEvents;
 using VideoReader.Domain;
 using VideoReader.Domain.Implementation;
-using YoutubeExplode.Videos.Streams;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
@@ -27,7 +24,7 @@ namespace VideoReader
             if( uri == null ) {
                 return new APIGatewayProxyResponse {
                     Body = JsonSerializer.Serialize( "" ),
-                    StatusCode = 200,
+                    StatusCode = 400,
                     Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
                 };
             }
@@ -40,14 +37,17 @@ namespace VideoReader
                     return new APIGatewayProxyResponse {
                         Body = JsonSerializer.Serialize( results ),
                         StatusCode = 200,
-                        Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                        Headers = new Dictionary<string, string> {
+                            { "Content-Type", "application/json" }, 
+                            { "Access-Control-Allow-Origin", "*" }
+                        }
                     };
                 }
             }
             
             return new APIGatewayProxyResponse {
-                Body = JsonSerializer.Serialize( "" ),
-                StatusCode = 200,
+                Body = JsonSerializer.Serialize( "Failed To Get Video" ),
+                StatusCode = 500,
                 Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
             };
         }

@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using VideoReader.Domain.Implementation;
-using YoutubeExplode.Videos.Streams;
 
 namespace VideoReader.Domain;
 
