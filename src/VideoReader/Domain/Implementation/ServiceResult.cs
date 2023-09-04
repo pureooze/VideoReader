@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 namespace VideoReader.Domain.Implementation;
 
-public enum PluginType {
-    YouTube,
-    Twitch
+public enum PluginOutputType {
+    File,
+    Playlist
 }
 
 public record ServiceResult<T> (
-    PluginType Type,
+    PluginOutputType OutputType,
     IEnumerable<T> Result
 );

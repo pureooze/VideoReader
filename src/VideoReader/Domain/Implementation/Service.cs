@@ -19,7 +19,7 @@ internal class Service : IService {
                     await plugin.GetManifests( sourceUri: uri );
 
                 return new ServiceResult<ResponseEntry>(
-                    Type: plugin.GetPluginType(),
+                    OutputType: plugin.GetPluginType(),
                     Result: result
                 );
             }

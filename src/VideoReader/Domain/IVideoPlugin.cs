@@ -9,7 +9,7 @@ public interface IVideoPlugin
 {
     bool CanHandleUri( string sourceUri );
 
-    PluginType GetPluginType();
+    PluginOutputType GetPluginType();
     
     Task<IEnumerable<ResponseEntry>> GetManifests(
         string sourceUri
