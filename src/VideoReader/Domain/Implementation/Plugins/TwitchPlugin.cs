@@ -1,13 +1,13 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Integration.Twitch;
 using Integrations;
 using Integrations.Domain;
-using YoutubeExplode.Videos.Streams;
 
-namespace VideoReader.Domain.Implementation; 
+namespace VideoReader.Domain.Implementation.Plugins; 
 
 internal class TwitchPlugin : IVideoPlugin {
     bool IVideoPlugin.CanHandleUri(
@@ -38,5 +38,11 @@ internal class TwitchPlugin : IVideoPlugin {
                 SizeInMb: 100
             )
         );
+    }
+
+    public Task<Stream> GetVideoSource(
+        string uri
+    ) {
+        throw new System.NotImplementedException();
     }
 }

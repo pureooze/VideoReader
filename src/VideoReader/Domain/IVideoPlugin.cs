@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace VideoReader.Domain;
@@ -9,7 +10,7 @@ public interface IVideoPlugin
     Task<IEnumerable<ResponseEntry>> GetManifests(
         string sourceUri
     );
-    // Task<Stream> GetVideoSource(
-    //     string uri
-    // );
+    Task<Stream> GetVideoSource(
+        string uri
+    );
 }
