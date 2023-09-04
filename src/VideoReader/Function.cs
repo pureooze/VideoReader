@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
 using Amazon.Lambda.Annotations;
@@ -19,7 +20,6 @@ namespace VideoReader
             ILambdaContext context
         ) {
             apigProxyEvent.QueryStringParameters.TryGetValue( "uri", out string uri );
-            IVideoPluginProvider videoPluginProvider = new VideoPluginProvider();
 
             if( uri == null ) {
                 return new APIGatewayProxyResponse {
@@ -28,27 +28,17 @@ namespace VideoReader
                     Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
                 };
             }
-            
-            IEnumerable<IVideoPlugin> plugins = videoPluginProvider.GetPlugins();
-            foreach( IVideoPlugin plugin in plugins ) {
-                if( plugin.CanHandleUri(sourceUri: uri) ) {
-                    IEnumerable<ResponseEntry> results = await plugin.GetManifests(  sourceUri: uri );
-                    
-                    return new APIGatewayProxyResponse {
-                        Body = JsonSerializer.Serialize( results ),
-                        StatusCode = 200,
-                        Headers = new Dictionary<string, string> {
-                            { "Content-Type", "application/json" }, 
-                            { "Access-Control-Allow-Origin", "*" }
-                        }
-                    };
-                }
-            }
+
+            IService service = new Service();
+            IEnumerable<ResponseEntry> results = await service.GetVideoSourcesForUriAsync( uri: uri );
             
             return new APIGatewayProxyResponse {
-                Body = JsonSerializer.Serialize( "Failed To Get Video" ),
-                StatusCode = 500,
-                Headers = new Dictionary<string, string> { { "Content-Type", "application/json" } }
+                Body = JsonSerializer.Serialize( results ),
+                StatusCode = 200,
+                Headers = new Dictionary<string, string> {
+                    { "Content-Type", "application/json" }, 
+                    { "Access-Control-Allow-Origin", "*" }
+                }
             };
         }
     }
