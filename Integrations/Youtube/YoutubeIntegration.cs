@@ -27,7 +27,7 @@ public class YoutubeIntegration : IIntegration {
                     Framerate: streamInfo.VideoQuality.Framerate,
                     IsHighDefinition: streamInfo.VideoQuality.IsHighDefinition,
                     SizeInMb: streamInfo.Size.MegaBytes,
-                    Filename: streamInfo.Container.Name
+                    Filename: video.Title
                 )
             )
         );
