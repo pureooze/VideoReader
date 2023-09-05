@@ -14,13 +14,16 @@ namespace VideoReader.Domain.Implementation.Plugins;
 internal class YoutubePlugin : IVideoPlugin {
     private readonly IIntegration m_integration = new YoutubeIntegration();
 
-    bool IVideoPlugin.CanHandleUri( string sourceUri )
-    {
-        const string youtubePattern = @"https:\/\/youtu\.be\/\w+";
-        return Regex.Match(
-            input: sourceUri, 
-            pattern: youtubePattern
-        ).Success;
+    private readonly string[] m_youtubePatterns = {
+        @"https:\/\/youtu\.be\/\w+",
+        @"https:\/\/www.youtube.com\/.*"
+    };
+
+    bool IVideoPlugin.CanHandleUri( string sourceUri ) {
+        return m_youtubePatterns.Any( 
+            pattern => 
+                Regex.Match( input: sourceUri, pattern: pattern).Success 
+        );
     }
 
     PluginOutputType IVideoPlugin.GetPluginType() {
