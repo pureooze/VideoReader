@@ -43,7 +43,8 @@ internal class YoutubePlugin : IVideoPlugin {
                         IsHighDefinition: manifest.Stream.IsHighDefinition 
                     ),
                     SizeInMb: manifest.Stream.SizeInMb,
-                    ThumbnailUrl: null
+                    ThumbnailUrl: null,
+                    Filename: manifest.Stream.Filename
                 ) 
         );
     }

@@ -10,5 +10,6 @@ public sealed record StreamInfo(
     string Label,
     int Framerate,
     bool IsHighDefinition,
-    double SizeInMb
+    double SizeInMb,
+    string Filename
 );

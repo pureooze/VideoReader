@@ -32,10 +32,11 @@ public class TwitchIntegration : IIntegration {
                     ThumbnailUrl: "",
                     LengthInSeconds: TimeSpan.Zero,
                     Codec: "",
-                    Label: content?.Data?.Video.Title ?? "",
+                    Label: "",
                     Framerate: 30,
                     IsHighDefinition: true,
-                    SizeInMb: 100
+                    SizeInMb: 100,
+                    Filename: content?.Data?.Video.Title ?? ""
                 )
             )
         };
