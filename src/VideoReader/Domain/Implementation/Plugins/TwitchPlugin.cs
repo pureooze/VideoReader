@@ -44,7 +44,8 @@ internal class TwitchPlugin : IVideoPlugin {
                     IsHighDefinition: manifest.Stream.IsHighDefinition
                 ),
                 SizeInMb: 100,
-                ThumbnailUrl: manifest.Stream.ThumbnailUrl
+                ThumbnailUrl: manifest.Stream.ThumbnailUrl,
+                Filename: manifest.Stream.Filename
             )
         );
     }
