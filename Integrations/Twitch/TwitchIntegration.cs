@@ -31,7 +31,7 @@ public class TwitchIntegration : IIntegration {
                     Url: videoSourceResponse,
                     ThumbnailUrl: "",
                     LengthInSeconds: TimeSpan.Zero,
-                    Codec: "",
+                    Codec: "m3u8",
                     Label: "",
                     Framerate: 30,
                     IsHighDefinition: true,
